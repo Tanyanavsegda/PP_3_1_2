@@ -1,0 +1,81 @@
+<!--
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+<h1>Welcome to Index PAGE!</h1>
+
+
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Login</th>
+    </tr>
+    <tr style="margin: 10px; border: black 10px" th:each="user : ${allUsers}">
+        <th style="margin: 10px;" th:text="${user.getUserrId()}">VALUE</th>
+        <th style="margin: 10px;" th:text="${user.getName()}">VALUE</th>
+        <th style="margin: 10px;" th:text="${user.getLastName()}">VALUE</th>
+        <th style="margin: 10px;" th:text="${user.getAge()}">VALUE</th>
+        <th style="margin: 10px;" th:text="${user.getLogin()}">VALUE</th>
+        <th>
+            <button>
+                <a style="margin: 10px;" th:href="@{/admin/{id}(id=${user.getUserrId()})}">Изменить</a>
+            </button>
+        </th>
+        <th>
+            <form style="margin: 10px;" th:method="DELETE" th:action="@{/admin/{id}(id=${user.getUserrId()})}">
+                <input type="submit" value="Delete"/>
+            </form>
+        </th>
+    </tr>
+</table>
+<form method="post" th:action="@{/admin}" th:object="${oneUser}">
+    <label for="name">Name: </label>
+    <input style="margin: 10px;" type="text" th:field="*{name}" id="name">
+    <br/>
+    <label for="lastName">Enter Last Name: </label>
+    <input style="margin: 10px;" type="text" th:field="*{lastName}" id="lastName"/>
+    <br/>
+    <label for="age">Enter age: </label>
+    <input style="margin: 10px;" type="text" th:field="*{age}" id="age"/>
+    <br/>
+    <label for="login">Enter Login: </label>
+    <input style="margin: 10px;" type="text" th:field="*{login}" id="login"/>
+    <br/>
+    <label for="password">Enter Password: </label>
+    <input style="margin: 10px;" type="text" th:field="*{password}" id="password"/>
+    <br/>
+    <label for="roles">Role: </label>
+    <input style="margin: 10px;" type="text" id="roles" list="role" th:field="*{roles}"/>
+    <datalist id="role" >
+        <option th:each="oneRole : ${roles}"
+                th:text="${oneRole.roleName}">
+    </datalist>
+    <!--<select multiple class="form-control form-control-sm"
+            id="roles" name="roles" size="2" required>
+        <option th:each="role: ${roles}"
+                th:value="${role.roleName}"
+                th:selected="${!oneUser.roles.contains(role)}">
+            <th:block th:text="${role.roleName}">
+            </th:block>
+        </option>
+    </select>-->
+    <input style="margin: 10px;" type="submit" value="Create!"/>
+</form>
+<a href="/logout">Logout</a>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+<h1>User, welcome spring boot security page!</h1>
+<table>
+    <tr style="margin: 10px; border: black 10px">
+        <th style="margin: 10px;">ID</th>
+        <th style="margin: 10px;">Name</th>
+        <th style="margin: 10px;">Last name</th>
+        <th style="margin: 10px;">Age</th>
+        <th style="margin: 10px;">Login</th>
+    </tr>
+<tr style="margin: 10px; border: black 10px">
+    <th style="margin: 10px;" th:text="${foundUser.getUserrId()}">VALUE</th>
+    <th style="margin: 10px;" th:text="${foundUser.name}">VALUE</th>
+    <th style="margin: 10px;" th:text="${foundUser.lastName}">VALUE</th>
+    <th style="margin: 10px;" th:text="${foundUser.age}">VALUE</th>
+    <th style="margin: 10px;" th:text="${foundUser.login}">VALUE</th>
+</tr>
+</table>
+<a href="/logout">Logout</a>
+</body>
+</html>
+<!--
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+</head>
+<body>
+<form th:method="patch" th:action="@{/users/{id}(id=${upUser.getId()})}" th:object="${upUser}">
+    <label for="name">Name: </label>
+    <input style="margin: 10px;" type="text" th:field="*{name}" id="name" th:value="${upUser.getName()}">
+    <br/>
+    <label for="lastName">Enter Last Name: </label>
+    <input style="margin: 10px;" type="text" th:field="*{lastName}" id="lastName" th:value="${upUser.getLastName()}"/>
+    <br/>
+    <label for="age">Enter age: </label>
+    <input style="margin: 10px;" type="text" th:field="*{age}" id="age" th:value="${upUser.getAge()}"/>
+    <br/>
+    <input style="margin: 10px;" type="submit" value="Update"/>
+</form>
+</body>
+</html>-->
