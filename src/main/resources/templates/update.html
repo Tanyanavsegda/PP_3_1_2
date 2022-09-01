@@ -21,6 +21,13 @@
   <label for="password">Enter Password: </label>
   <input style="margin: 10px;" type="text" th:field="*{password}" id="password" th:value="${upUser.getPassword()}"/>
   <br/>
+  <select th:value="${upUser.roles}" class="form-control"
+          th:name="roles"
+          name="roles" multiple size="2" >
+    <option th:each="role : ${allRoles}"
+            th:value="${role.getRoleName()}"
+            th:text="${role.getRoleName()}">
+  </select>
   <input style="margin: 10px;" type="submit" value="Update"/>
 </form>
 </body>

@@ -9,10 +9,10 @@ import java.util.Set;
 @Table(name = "roles", schema = "public")
 public class Roles implements GrantedAuthority {
 
-    @Column(name = "role_id")
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int roleId;
+    private int id;
 
     @Column(name = "role_name")
     private String roleName;
@@ -28,11 +28,11 @@ public class Roles implements GrantedAuthority {
     }
 
     public int getRoleId() {
-        return roleId;
+        return id;
     }
 
     public void setRoleId(int id) {
-        this.roleId = roleId;
+        this.id = id;
     }
 
     public String getRoleName() {

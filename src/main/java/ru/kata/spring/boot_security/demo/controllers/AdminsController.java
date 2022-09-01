@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,7 @@ public class AdminsController {
     @GetMapping("/{id}")
     public String update(@PathVariable("id") int id, Model model) {
         model.addAttribute("upUser", usersService.findOne(id));
+        model.addAttribute("allRoles", rolesService.getAllRoles());
         return "/update";
     }
 
@@ -60,7 +62,14 @@ public class AdminsController {
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@PathVariable("id") int id, @ModelAttribute User user) {
+    public String updateUser(@PathVariable("id") int id, @RequestParam(value = "name") String name,
+                             @RequestParam(value = "lastName") String lastName,
+                             @RequestParam(value = "age") int age,
+                             @RequestParam(value = "login") String login,
+                             @RequestParam(value = "password") String password,
+                             @RequestParam("roles") String role) {
+        //usersService.findByLogin(login).setRoles(null);
+        User user = new User(name, lastName, age, login, password, Stream.of(rolesService.getRole(role)).collect(Collectors.toSet()));
         usersService.update(id, user);
         return "redirect:/admin";
     }
