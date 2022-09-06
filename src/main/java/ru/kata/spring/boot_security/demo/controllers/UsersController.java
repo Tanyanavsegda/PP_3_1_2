@@ -22,10 +22,10 @@ public class UsersController {
     }
 
 
-
     @GetMapping("/user")
     public String user(@AuthenticationPrincipal UserDetails user, Model model) {
         User foundUser = usersService.findByLogin(user.getUsername());
+        model.addAttribute("user", user);
         model.addAttribute("foundUser", foundUser);
         return "/user";
     }

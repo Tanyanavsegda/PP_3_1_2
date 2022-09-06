@@ -41,7 +41,7 @@ public class User implements UserDetails {
     @Column(name = "login")
     private String login;
 
-    @NotEmpty
+
     @Column(name = "password")
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)

@@ -54,7 +54,7 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     @Transactional
     public void update(int id, User updateUser) {
         updateUser.setUserrId(id);
-        usersRepository.save(updateUser);
+        save(updateUser);
     }
 
     @Override
