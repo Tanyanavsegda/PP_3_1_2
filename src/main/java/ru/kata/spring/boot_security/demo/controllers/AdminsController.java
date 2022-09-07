@@ -7,10 +7,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.models.Roles;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.RolesService;
 import ru.kata.spring.boot_security.demo.services.UsersService;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -50,8 +54,10 @@ public class AdminsController {
                          @RequestParam(value = "age") int age,
                          @RequestParam(value = "login") String login,
                          @RequestParam(value = "password") String password,
-                         @RequestParam("roles") String role) {
-        User user = new User(name, lastName, age, login, password, Stream.of(rolesService.getRole(role)).collect(Collectors.toSet()));
+                         @RequestParam("roles") String[] role) {
+        Set<Roles> roles = new HashSet<>();
+        Arrays.stream(role).forEach(r -> roles.add(rolesService.getRole(r)));
+        User user = new User(name, lastName, age, login, password, roles);
         usersService.save(user);
         System.out.println("post");
         return "redirect:/admin";
@@ -70,9 +76,10 @@ public class AdminsController {
                              @RequestParam(value = "age") int age,
                              @RequestParam(value = "login") String login,
                              @RequestParam(value = "password") String password,
-                             @RequestParam("roles") String role) {
-        //usersService.findByLogin(login).setRoles(null);
-        User user = new User(name, lastName, age, login, password, Stream.of(rolesService.getRole(role)).collect(Collectors.toSet()));
+                             @RequestParam("roles") String[] role) {
+        Set<Roles> roles = new HashSet<>();
+        Arrays.stream(role).forEach(r -> roles.add(rolesService.getRole(r)));
+        User user = new User(name, lastName, age, login, password, roles);
         usersService.update(id, user);
         return "redirect:/admin";
     }

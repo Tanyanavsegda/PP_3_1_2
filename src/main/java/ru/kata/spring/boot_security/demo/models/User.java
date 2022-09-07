@@ -42,6 +42,7 @@ public class User implements UserDetails {
     private String login;
 
 
+    @NotEmpty
     @Column(name = "password")
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
