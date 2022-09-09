@@ -16,6 +16,7 @@ import ru.kata.spring.boot_security.demo.repositories.UsersRepository;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,13 +42,21 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     public User findOne(int id) {
         Optional<User> foundUser = usersRepository.findById(id);
         return foundUser.orElse(null);
+
     }
 
     @Override
     @Transactional
     public void save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        usersRepository.save(user);
+        Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
+
+        if (BCRYPT_PATTERN.matcher(user.getPassword()).matches()) {
+            usersRepository.save(user);
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            usersRepository.save(user);
+        }
+
     }
 
     @Override

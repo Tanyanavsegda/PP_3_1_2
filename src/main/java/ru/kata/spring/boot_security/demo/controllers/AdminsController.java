@@ -79,8 +79,17 @@ public class AdminsController {
                              @RequestParam("roles") String[] role) {
         Set<Roles> roles = new HashSet<>();
         Arrays.stream(role).forEach(r -> roles.add(rolesService.getRole(r)));
-        User user = new User(name, lastName, age, login, password, roles);
+        User user = usersService.findOne(id);
+        user.setName(name);
+        user.setLastName(lastName);
+        user.setAge(age);
+        user.setLogin(login);
+        user.setRoles(roles);
+        if (!password.equals("")) {
+            user.setPassword(password);
+        }
         usersService.update(id, user);
         return "redirect:/admin";
     }
+
 }
